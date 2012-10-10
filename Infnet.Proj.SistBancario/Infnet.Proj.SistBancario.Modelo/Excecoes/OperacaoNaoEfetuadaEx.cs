@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SistBancario.Exceções
+namespace SistBancario.Excecoes
 {
     public class OperacaoNaoEfetuadaEx : Exception
     {

@@ -3,32 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SistBancario.Operacoes;
+using SistBancario.Interfaces;
 
 namespace SistBancario
 {
-    public class Conta
+    public class Conta : IConta
     {
-        public List<OperacaoBancaria> OperacoesEfetuadas { get; set; }
-
         public Conta()
         {
             this.saldo = 0;
-            this.OperacoesEfetuadas = new List<OperacaoBancaria>();
+            this.OperacoesEfetuadas = new List<IOperacaoBancaria>();
         }
 
         public Conta(double saldoInicial)
         {
             this.saldo = saldoInicial;
-            this.OperacoesEfetuadas = new List<OperacaoBancaria>();
+            this.OperacoesEfetuadas = new List<IOperacaoBancaria>();
         }
-
-        private double saldo { get; set; }
 
         /// <summary>
         /// informa o saldo da conta
         /// </summary>
         /// <returns>saldo atual</returns>
-        public double InformaSaldo()
+        public override double InformaSaldo()
         {
             return saldo;
         }
@@ -38,14 +35,14 @@ namespace SistBancario
         /// </summary>
         /// <param name="valor"></param>
         /// <returns></returns>
-        public virtual void EfetuaSaque(double valor)
+        public override void EfetuaSaque(double valor)
         {
             try
             {
                 Saque saque = new Saque(valor);
 
                 if (saldo < valor)
-                    throw new SistBancario.Exceções.OperacaoNaoEfetuadaEx("Operação não pôde ser efetuada. Saldo indisponível");
+                    throw new SistBancario.Excecoes.OperacaoNaoEfetuadaEx("Operação não pôde ser efetuada. Saldo indisponível");
 
                 saldo -= saque.Valor;
 
@@ -62,12 +59,12 @@ namespace SistBancario
         /// </summary>
         /// <param name="valor"></param>
         /// <returns></returns>
-        public virtual void EfetuaDeposito(double valor)
+        public override void EfetuaDeposito(double valor)
         {
             try
             {
                 Deposito deposito = new Deposito(valor);
-                                
+
                 saldo += valor;
 
                 OperacoesEfetuadas.Add(deposito);
@@ -78,22 +75,25 @@ namespace SistBancario
             }
         }
 
-        public virtual List<OperacaoBancaria> RetornaExtrato(DateTime dataInicial, DateTime dataFinal)
+        public override Extrato RetornaExtrato(DateTime dataInicial, DateTime dataFinal)
         {
             try
-            {
+            {                
                 var res = from op in OperacoesEfetuadas
                           where op.Data.Date >= dataInicial.Date
                           && op.Data.Date <= dataFinal.Date
                           select op;
 
-                return res.ToList();
+                Extrato extrato = new Extrato(dataInicial, dataFinal, res.ToArray());
+
+                OperacoesEfetuadas.Add(extrato);
+
+                return extrato;
             }
             catch (Exception)
             {
                 throw;
-            }        
+            }
         }
-
     }
 }

@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Operações\Deposito.cs" />
-    <Compile Include="Operações\OperacaoBancaria.cs" />
-    <Compile Include="Operações\Saque.cs" />
+    <Compile Include="Interfaces\IConta.cs" />
+    <Compile Include="Operacoes\Deposito.cs" />
+    <Compile Include="Operacoes\Extrato.cs" />
+    <Compile Include="Interfaces\IOperacaoBancaria.cs" />
+    <Compile Include="Operacoes\Saque.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="Conta.cs" />
     <Compile Include="Endereco.cs" />
-    <Compile Include="Exceções\OperacaoNaoEfetuadaEx.cs" />
+    <Compile Include="Excecoes\OperacaoNaoEfetuadaEx.cs" />
     <Compile Include="Fisica.cs" />
     <Compile Include="Juridica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

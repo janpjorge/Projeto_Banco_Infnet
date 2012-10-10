@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SistBancario.Operacoes
 {
-    public abstract class OperacaoBancaria
+    public abstract class IOperacaoBancaria
     {
-        public OperacaoBancaria()
+        public IOperacaoBancaria()
         {
             this.Data = DateTime.Now;
         }

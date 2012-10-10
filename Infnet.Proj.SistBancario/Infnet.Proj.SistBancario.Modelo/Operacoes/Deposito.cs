@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SistBancario.Operacoes
 {
-    public class Deposito : OperacaoBancaria
+    public class Deposito : IOperacaoBancaria
     {
         public Deposito(double valor)
             : base()
