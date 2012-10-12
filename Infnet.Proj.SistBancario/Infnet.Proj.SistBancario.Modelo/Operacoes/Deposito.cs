@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SistBancario.Interfaces;
 
 namespace SistBancario.Operacoes
 {
     public class Deposito : IOperacaoBancaria
     {
-        public Deposito(double valor)
-            : base()
+        public Deposito(IConta conta, double valor)
+            : base(conta)
         {
             this.Valor = valor;
+
+            this.Conta.Saldo += valor;
         }
 
-        public double Valor { get; set; }               
+        public double Valor { get; private set; }               
     }
 }

@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SistBancario.Interfaces;
+using SistBancario.Repositorios;
 
 namespace SistBancario.Operacoes
 {
     public class Extrato : IOperacaoBancaria
     {
-        public Extrato(DateTime inicio,DateTime fim, IOperacaoBancaria[] operacoes):base()
+        public Extrato(IConta conta, DateTime inicio,DateTime fim):base(conta)
         {
-            this.inicio = inicio;
-            this.fim = fim;
-            this.Operacoes = operacoes;
+            this.Inicio = inicio;
+            this.Fim = fim;           
+
+            this.Operacoes = RepositorioOperacoes.RetornaOperacoes(conta,inicio,fim);
         }
 
-        private IOperacaoBancaria[] Operacoes { get; set; }
-        private DateTime inicio { get; set; }
-        private DateTime fim { get; set; }
-
-        public IOperacaoBancaria[] InformaOperacoes()
-        {
-            return Operacoes;
-        }
+        public IOperacaoBancaria[] Operacoes { get; private set; }
+        public DateTime Inicio { get; private set; }
+        public DateTime Fim { get;private set; }              
     }
 }

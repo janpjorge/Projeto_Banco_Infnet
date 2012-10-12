@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SistBancario.Interfaces;
 
 namespace SistBancario.Operacoes
 {
     public abstract class IOperacaoBancaria
     {
-        public IOperacaoBancaria()
+        public IOperacaoBancaria(IConta conta)
         {
+            this.Conta = conta;
             this.Data = DateTime.Now;
+            this.ID = Guid.NewGuid();
         }
 
-        public DateTime Data { get; set; }        
-
+        public IConta Conta { get; private set; }
+        public Guid ID { get; private set; }
+        public DateTime Data { get; private set; }      
+  
     }
 }

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F055A7A0-4920-431B-BEF2-F60D1D0EFB9B}</ProjectGuid>
+    <ProjectGuid>{D0C455CE-F961-49AE-8D5A-D705756AFF76}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Infnet.Proj.SistBancario.Modelo</RootNamespace>
-    <AssemblyName>Infnet.Proj.SistBancario.Modelo</AssemblyName>
+    <RootNamespace>Infnet.Proj.SistBancario.Teste</RootNamespace>
+    <AssemblyName>Infnet.Proj.SistBancario.Teste</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,25 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContaEspecial.cs" />
-    <Compile Include="Interfaces\IConta.cs" />
-    <Compile Include="Operacoes\Deposito.cs" />
-    <Compile Include="Operacoes\Extrato.cs" />
-    <Compile Include="Interfaces\IOperacaoBancaria.cs" />
-    <Compile Include="Operacoes\Saque.cs" />
-    <Compile Include="Cliente.cs" />
-    <Compile Include="ContaSimples.cs" />
-    <Compile Include="Endereco.cs" />
-    <Compile Include="Excecoes\OperacaoNaoEfetuadaEx.cs" />
-    <Compile Include="Fisica.cs" />
-    <Compile Include="Juridica.cs" />
-    <Compile Include="Operacoes\Transferencia.cs" />
+    <Compile Include="ContaTeste.cs" />
+    <Compile Include="OperacoesTeste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositorios\RepositorioOperacoes.cs" />
-    <Compile Include="Telefone.cs" />
+    <Compile Include="RepositorioContas.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagramModelo.cd" />
+    <ProjectReference Include="..\Infnet.Proj.SistBancario.Modelo\Infnet.Proj.SistBancario.Modelo.csproj">
+      <Project>{F055A7A0-4920-431B-BEF2-F60D1D0EFB9B}</Project>
+      <Name>Infnet.Proj.SistBancario.Modelo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
