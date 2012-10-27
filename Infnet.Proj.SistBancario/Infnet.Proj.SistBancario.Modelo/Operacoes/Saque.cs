@@ -11,7 +11,7 @@ namespace SistBancario.Operacoes
 
             this.Valor = valor;
 
-            conta.Saldo -= this.Valor;
+          //  conta.Saldo -= this.Valor;
         }
 
         public double Valor { get; private set; }               

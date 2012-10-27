@@ -11,7 +11,7 @@ namespace SistBancario.Operacoes
             this.Inicio = inicio;
             this.Fim = fim;           
 
-            this.Operacoes = RepositorioOperacoes.RetornaOperacoes(conta,inicio,fim);
+            this.Operacoes = RepositorioOperacoes.Instance.RetornaOperacoes(conta,inicio,fim);
         }
 
         public IOperacaoBancaria[] Operacoes { get; private set; }

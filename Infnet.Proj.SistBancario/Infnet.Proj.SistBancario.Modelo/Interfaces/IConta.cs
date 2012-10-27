@@ -1,16 +1,29 @@
 ﻿using System;
 using SistBancario.Operacoes;
 using SistBancario.Repositorios;
+using SistBancario.Modelo;
+using SistBancario.Enums;
 
 namespace SistBancario.Interfaces
 {
     public abstract class IConta
     {
+        public StatusConta Status { get; set; }
+
         public IConta(int agencia, int numeroConta)
         {
             this.Agencia = agencia;
             this.NumeroConta = numeroConta;
         }
+
+        public IConta(int agencia, int numeroConta,Cliente[] clientes)
+        {
+            this.Agencia = agencia;
+            this.NumeroConta = numeroConta;
+            this.Clientes = clientes;
+        }
+
+        public Cliente[] Clientes { get;private set; }
 
         public int NumeroConta { get; private set; }
         public int Agencia { get;private  set; }
@@ -27,7 +40,8 @@ namespace SistBancario.Interfaces
             try
             {
                 Saque saque = new Saque(this, valor);
-                RepositorioOperacoes.AdicionaOperacao(saque);
+                RepositorioOperacoes.Instance.Adiciona(saque);
+                this.Saldo -= saque.Valor;
 
                 return saque.ID;
             }
@@ -47,7 +61,8 @@ namespace SistBancario.Interfaces
             try
             {
                 Deposito deposito = new Deposito(this, valor);
-                RepositorioOperacoes.AdicionaOperacao(deposito);
+                RepositorioOperacoes.Instance.Adiciona(deposito);
+                this.Saldo += deposito.Valor;
 
                 return deposito.ID;
             }
@@ -68,7 +83,7 @@ namespace SistBancario.Interfaces
             try
             {
                 Extrato extrato = new Extrato(this, dataInicial, dataFinal);
-                RepositorioOperacoes.AdicionaOperacao(extrato);
+                RepositorioOperacoes.Instance.Adiciona(extrato);
 
                 return extrato;
             }
@@ -89,7 +104,7 @@ namespace SistBancario.Interfaces
             try
             {
                 Transferencia tranferencia = new Transferencia(this, contaDestino, valor);
-                RepositorioOperacoes.AdicionaOperacao(tranferencia);
+                RepositorioOperacoes.Instance.Adiciona(tranferencia);
 
                 return tranferencia.ID;
             }

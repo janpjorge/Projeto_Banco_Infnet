@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContaEspecial.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Interfaces\IConta.cs" />
+    <Compile Include="Interfaces\IRepositorio.cs" />
     <Compile Include="Operacoes\Deposito.cs" />
     <Compile Include="Operacoes\Extrato.cs" />
     <Compile Include="Interfaces\IOperacaoBancaria.cs" />
@@ -50,10 +52,12 @@
     <Compile Include="ContaSimples.cs" />
     <Compile Include="Endereco.cs" />
     <Compile Include="Excecoes\OperacaoNaoEfetuadaEx.cs" />
-    <Compile Include="Fisica.cs" />
-    <Compile Include="Juridica.cs" />
+    <Compile Include="PessoaFisica.cs" />
+    <Compile Include="PessoaJuridica.cs" />
     <Compile Include="Operacoes\Transferencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\RepositorioClientes.cs" />
+    <Compile Include="Repositorios\RepositorioContas.cs" />
     <Compile Include="Repositorios\RepositorioOperacoes.cs" />
     <Compile Include="Telefone.cs" />
   </ItemGroup>

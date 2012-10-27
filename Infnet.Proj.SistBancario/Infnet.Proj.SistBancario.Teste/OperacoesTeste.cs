@@ -7,12 +7,13 @@ namespace SistBancario.Teste
     [TestFixture]
     public class OperacoesTeste
     {
-        RepositorioContas repositorioContas = new RepositorioContas();
+        
         [Test]
         public void DepositoTest()
         { 
             double valor = 1000;
-            Deposito deposito = new Deposito(repositorioContas.contas[0] as ContaSimples, valor);
+            CriadorContas.CriarContasSimples();
+            Deposito deposito = new Deposito(CriadorContas.contas[0] as ContaSimples, valor);
 
             Assert.AreEqual(valor, deposito.Valor);
         }
@@ -21,7 +22,8 @@ namespace SistBancario.Teste
         public void SaqueTest()
         {
             double valor = 1000;
-            Saque saque = new Saque(repositorioContas.contas[0] as ContaSimples, valor);
+            CriadorContas.CriarContasSimples();
+            Saque saque = new Saque(CriadorContas.contas[0] as ContaSimples, valor);
 
             Assert.AreEqual(valor, saque.Valor);
         }
@@ -30,8 +32,9 @@ namespace SistBancario.Teste
         public void TransferenciaTest()
         {
             double valor = 1000;
+            CriadorContas.CriarContasSimples();
             
-            Transferencia transferencia = new Transferencia(repositorioContas.contas[0] as ContaSimples,repositorioContas.contas[1] as ContaSimples,  valor);
+            Transferencia transferencia = new Transferencia(CriadorContas.contas[0] as ContaSimples,CriadorContas.contas[1] as ContaSimples,  valor);
 
             Assert.AreEqual(valor, transferencia.Valor);
         }
@@ -39,7 +42,8 @@ namespace SistBancario.Teste
         [Test]
         public void ExtratoTest()
         {
-            Extrato extrato = new Extrato(repositorioContas.contas[0] as ContaSimples, new DateTime(2012, 09, 01), new DateTime(2012, 10, 01));
+            CriadorContas.CriarContasSimples();
+            Extrato extrato = new Extrato(CriadorContas.contas[0] as ContaSimples, new DateTime(2012, 09, 01), new DateTime(2012, 10, 01));
             //Transferencia transferencia = new Transferencia(conta, valor);
 
             //Assert.AreEqual(valor, transferencia.Valor);

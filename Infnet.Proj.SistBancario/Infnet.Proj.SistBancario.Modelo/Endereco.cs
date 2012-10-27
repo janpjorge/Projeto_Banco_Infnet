@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infnet.Proj.SistBancario.Modelo
+namespace SistBancario.Modelo
 {
     public  class  Endereco
     {

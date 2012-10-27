@@ -9,7 +9,7 @@ namespace SistBancario.Operacoes
         {
             this.Valor = valor;
 
-            this.Conta.Saldo += valor;
+           // this.Conta.Saldo += valor;
         }
 
         public double Valor { get; private set; }               

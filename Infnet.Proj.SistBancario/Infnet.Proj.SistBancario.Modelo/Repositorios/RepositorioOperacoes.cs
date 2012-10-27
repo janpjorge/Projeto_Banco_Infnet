@@ -6,31 +6,35 @@ using SistBancario.Operacoes;
 
 namespace SistBancario.Repositorios
 {
-    public static class RepositorioOperacoes
-    {
-        private static List<IOperacaoBancaria> operacoes = new List<IOperacaoBancaria>();
-
-        public static void AdicionaOperacao(IOperacaoBancaria op)
+    public class RepositorioOperacoes : IRepositorio<IOperacaoBancaria>
+    {        
+        public static RepositorioOperacoes Instance
         {
-            operacoes.Add(op);
+            get 
+            {
+                if (instance == null)
+                    instance = new RepositorioOperacoes();
+
+                return instance as RepositorioOperacoes;
+            }
         }
-
-        public static IOperacaoBancaria[] RetornaOperacoes(IConta conta)
-        {
-            var res = from op in operacoes
-                      where op.Conta.Agencia == conta.Agencia
-                      && op.Conta.NumeroConta == conta.NumeroConta
-                      select op;
-
-            return res.ToArray();
-        }
-
-        public static IOperacaoBancaria[] RetornaOperacoes(IConta conta, DateTime dataInicio, DateTime dataFim)        
+        
+        public IOperacaoBancaria[] RetornaOperacoes(IConta conta, DateTime dataInicio, DateTime dataFim)        
         { 
             var res = from op in RetornaOperacoes(conta)
                       where op.Data.Date >= dataInicio.Date
                           && op.Data.Date <= dataFim.Date
                           select op;
+
+            return res.ToArray();
+        }
+
+        public IOperacaoBancaria[] RetornaOperacoes(IConta conta)
+        {
+            var res = from op in RetornaTodos()
+                      where op.Conta.Agencia == conta.Agencia
+                      && op.Conta.NumeroConta == conta.NumeroConta
+                      select op;
 
             return res.ToArray();
         }

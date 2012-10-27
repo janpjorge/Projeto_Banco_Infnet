@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using SistBancario;
 using SistBancario.Operacoes;
+using SistBancario.Excecoes;
 
 namespace SistBancario.Teste
 {
@@ -17,8 +18,8 @@ namespace SistBancario.Teste
         [Test]
         public void AgenciaTest()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
             int ag = 1;
            
             Assert.AreEqual(ag, conta.Agencia);
@@ -30,9 +31,8 @@ namespace SistBancario.Teste
         [Test]
         public void NumeroContaTest()
         {
-            RepositorioContas reposito = new RepositorioContas();
-
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
             int numeroConta = 0;
             
             Assert.AreEqual(numeroConta, conta.NumeroConta);
@@ -45,8 +45,8 @@ namespace SistBancario.Teste
         [Test]
         public void SaldoTest()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
             double expected = 1000;
             
             Assert.AreEqual(expected, conta.Saldo);
@@ -59,8 +59,8 @@ namespace SistBancario.Teste
         [Test]
         public void EfetuaSaqueTest()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
             double valor = 100;
             double esperado = 900;
 
@@ -75,8 +75,8 @@ namespace SistBancario.Teste
         [Test]
         public void EfetuaDepositoTest()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
             double valor = 100;
             double esperado = 1100;
             conta.EfetuaDeposito(valor);
@@ -91,8 +91,8 @@ namespace SistBancario.Teste
         [Test]
         public void RetornaExtratoTestCaso1()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
 
             Guid depositoID = conta.EfetuaDeposito(100);
             Guid saqueID = conta.EfetuaSaque(50);
@@ -107,8 +107,8 @@ namespace SistBancario.Teste
         [Test]
         public void RetornaExtratoTestCaso2()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples conta = reposito.contas[0] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
 
             Guid depositoID = conta.EfetuaDeposito(100);
             Guid saqueID = conta.EfetuaSaque(50);
@@ -128,9 +128,9 @@ namespace SistBancario.Teste
         [Test]
         public void EfetuaTransferenciaTest()
         {
-            RepositorioContas reposito = new RepositorioContas();
-            ContaSimples a = reposito.contas[0] as ContaSimples;
-            ContaSimples b = reposito.contas[1] as ContaSimples;
+            CriadorContas.CriarContasSimples();
+            ContaSimples a = CriadorContas.contas[0] as ContaSimples;
+            ContaSimples b = CriadorContas.contas[1] as ContaSimples;
 
             a.EfetuaTranferencia(b, 500);
 
@@ -141,5 +141,34 @@ namespace SistBancario.Teste
 
             Assert.IsTrue(retorno);
         }
+
+
+        /// <summary>
+        /// Operação não realizada por bloqueio ou conta fechada
+        /// </summary>
+        [Test]
+        public void ContaBloqueadaTest()
+        {
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[4] as ContaSimples;
+            double valor = 300;
+
+            Assert.Catch<OperacaoNaoEfetuadaEx>(delegate { conta.EfetuaSaque(valor); });
+        }
+
+
+        /// <summary>
+        /// Saque não realizado por saldo indisponível
+        /// </summary>
+        [Test]
+        public void SaqueNaoRealizadoTest()
+        {
+            CriadorContas.CriarContasSimples();
+            ContaSimples conta = CriadorContas.contas[0] as ContaSimples;
+            double valor = 1890;
+
+            Assert.Catch<OperacaoNaoEfetuadaEx>(delegate { conta.EfetuaSaque(valor); });
+        }
+
     }
 }
