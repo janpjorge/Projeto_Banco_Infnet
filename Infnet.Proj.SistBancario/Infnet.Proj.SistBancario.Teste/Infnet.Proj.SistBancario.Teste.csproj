@@ -41,11 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContaSimplesTeste.cs" />
-    <Compile Include="ContaEspecialTeste.cs" />
-    <Compile Include="OperacoesTeste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CriadorContas.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infnet.Proj.SistBancario.Modelo\Infnet.Proj.SistBancario.Modelo.csproj">

@@ -7,7 +7,13 @@ using SistBancario.Operacoes;
 namespace SistBancario.Repositorios
 {
     public class RepositorioOperacoes : IRepositorio<IOperacaoBancaria>
-    {        
+    {
+                
+        RepositorioOperacoes()
+        {
+
+        }
+
         public static RepositorioOperacoes Instance
         {
             get 
@@ -34,6 +40,15 @@ namespace SistBancario.Repositorios
             var res = from op in RetornaTodos()
                       where op.Conta.Agencia == conta.Agencia
                       && op.Conta.NumeroConta == conta.NumeroConta
+                      select op;
+
+            return res.ToArray();
+        }
+
+        public IOperacaoBancaria[] RetornaOperacoes(IConta conta, Type type)
+        {
+            var res = from op in RetornaOperacoes(conta)
+                      where op.GetType().Name == type.Name
                       select op;
 
             return res.ToArray();

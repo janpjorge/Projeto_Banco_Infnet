@@ -1,20 +1,23 @@
 ﻿using SistBancario.Interfaces;
+using SistBancario.Repositorios;
 
 namespace SistBancario.Operacoes
 {
     public class Saque : IOperacaoBancaria
     {
         public Saque(IConta conta, double valor):base(conta)
-        {
-            if (this.Conta.Saldo < valor)
-                throw new SistBancario.Excecoes.OperacaoNaoEfetuadaEx("Operação não pôde ser efetuada. Saldo indisponível");
-
+        {           
             this.Valor = valor;
 
-          //  conta.Saldo -= this.Valor;
+            RepositorioOperacoes.Instance.Adiciona(this);
         }
 
-        public double Valor { get; private set; }               
+        public double Valor { get; private set; }
 
+
+        public override void Executa()
+        {
+            Conta.DebitaValor(Valor);
+        }
     }
 }

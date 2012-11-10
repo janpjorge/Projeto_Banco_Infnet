@@ -9,13 +9,7 @@ namespace SistBancario.Interfaces
     public abstract class IConta
     {
         public StatusConta Status { get; set; }
-
-        public IConta(int agencia, int numeroConta)
-        {
-            this.Agencia = agencia;
-            this.NumeroConta = numeroConta;
-        }
-
+        
         public IConta(int agencia, int numeroConta,Cliente[] clientes)
         {
             this.Agencia = agencia;
@@ -29,48 +23,53 @@ namespace SistBancario.Interfaces
         public int Agencia { get;private  set; }
                 
         public virtual double Saldo { get;  set; }
-               
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="valor">Valor do saque</param>
-        /// <returns>ID da Operação</returns>
-        public virtual Guid EfetuaSaque(double valor)
-        {
-            try
-            {
-                Saque saque = new Saque(this, valor);
-                RepositorioOperacoes.Instance.Adiciona(saque);
-                this.Saldo -= saque.Valor;
 
-                return saque.ID;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        public abstract void DebitaValor(double valor);
+        public abstract void CreditaValor(double valor);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="valor">Valor depositado</param>
-        /// <returns>ID da Operação</returns>
-        public virtual Guid EfetuaDeposito(double valor)
-        {
-            try
-            {
-                Deposito deposito = new Deposito(this, valor);
-                RepositorioOperacoes.Instance.Adiciona(deposito);
-                this.Saldo += deposito.Valor;
+        public abstract bool ExistePendencias();
 
-                return deposito.ID;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="valor">Valor do saque</param>
+        ///// <returns>ID da Operação</returns>
+        //public virtual Guid EfetuaSaque(double valor)
+        //{
+        //    try
+        //    {
+        //        Saque saque = new Saque(this, valor);
+        //        RepositorioOperacoes.Instance.Adiciona(saque);
+        //        this.Saldo -= saque.Valor;
+
+        //        return saque.ID;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="valor">Valor depositado</param>
+        ///// <returns>ID da Operação</returns>
+        //public virtual Guid EfetuaDeposito(double valor)
+        //{
+        //    try
+        //    {
+        //        Deposito deposito = new Deposito(this, valor);
+        //        RepositorioOperacoes.Instance.Adiciona(deposito);
+        //        this.Saldo += deposito.Valor;
+
+        //        return deposito.ID;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         /// <summary>
         /// 
@@ -93,25 +92,27 @@ namespace SistBancario.Interfaces
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="contaDestino">Conta de destino</param>
-        /// <param name="valor">valor da tranferencia</param>
-        /// <returns>ID da Operação</returns>
-        public virtual Guid EfetuaTranferencia(IConta contaDestino, double valor)
-        {
-            try
-            {
-                Transferencia tranferencia = new Transferencia(this, contaDestino, valor);
-                RepositorioOperacoes.Instance.Adiciona(tranferencia);
 
-                return tranferencia.ID;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //TODO: não faz sentido uma conta alterar outra conta
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="contaDestino">Conta de destino</param>
+        ///// <param name="valor">valor da tranferencia</param>
+        ///// <returns>ID da Operação</returns>
+        //public virtual Guid EfetuaTranferencia(IConta contaDestino, double valor)
+        //{
+        //    try
+        //    {
+        //        Transferencia tranferencia = new Transferencia(this, contaDestino, valor);
+        //        RepositorioOperacoes.Instance.Adiciona(tranferencia);
+
+        //        return tranferencia.ID;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }

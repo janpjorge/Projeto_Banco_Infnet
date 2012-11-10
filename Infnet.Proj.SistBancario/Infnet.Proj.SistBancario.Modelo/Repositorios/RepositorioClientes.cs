@@ -6,6 +6,11 @@ namespace SistBancario.Repositorios
 {
     public class RepositorioClientes : IRepositorio<Cliente>
     {
+        RepositorioClientes()
+        {
+
+        }
+        
         public static RepositorioClientes Instance
         {
             get
@@ -40,3 +45,4 @@ namespace SistBancario.Repositorios
 
     }
 }
+

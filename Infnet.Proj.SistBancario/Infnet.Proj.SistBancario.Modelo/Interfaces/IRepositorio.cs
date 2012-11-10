@@ -7,6 +7,11 @@ namespace SistBancario.Repositorios
 {
     public abstract class IRepositorio<T>
     {
+        protected IRepositorio()
+        {
+
+        }
+
         protected static IRepositorio<T> instance;
           
         protected static List<T> Items = new List<T>();

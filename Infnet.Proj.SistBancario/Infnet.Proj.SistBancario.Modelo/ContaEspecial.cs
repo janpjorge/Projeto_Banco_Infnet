@@ -5,6 +5,7 @@ using System.Text;
 using SistBancario.Interfaces;
 using SistBancario.Operacoes;
 using SistBancario.Repositorios;
+using SistBancario.Modelo;
 
 namespace SistBancario
 {
@@ -29,37 +30,27 @@ namespace SistBancario
            get { return SaldoSimples + LimiteDisponivel; }
        }
 
-       public ContaEspecial(int agencia, int numeroConta,double valorLimite)
-           : base(agencia, numeroConta)
+       public ContaEspecial(int agencia, int numeroConta, double valorLimite,Cliente[] clientes):base(agencia,numeroConta,clientes)
        {
            this.SaldoSimples = 0;
            this.LimiteDisponivel = this.Limite = valorLimite;
-       }
+       }     
 
-       public ContaEspecial(int agencia, int numeroConta, double valorLimite,double saldoInicial)
-           : base(agencia, numeroConta)
-       {
-           this.SaldoSimples = saldoInicial;
-           this.LimiteDisponivel = this.Limite = valorLimite;
-       }
-
-       public override Guid EfetuaSaque(double valor)
+       public override void DebitaValor(double valor)
        {
            try
            {
-               Saque saque = new Saque(this, valor);
-               RepositorioOperacoes.Instance.Adiciona(saque);
-
-               if (SaldoSimples > saque.Valor)
-                   SaldoSimples -= saque.Valor;
+               if (this.Saldo < valor)
+                   throw new SistBancario.Excecoes.OperacaoNaoEfetuadaEx("Operação não pôde ser efetuada. Saldo indisponível");
+               
+               if (SaldoSimples > valor)
+                   SaldoSimples -= valor;
                else
                {
-                   double auxVal = saque.Valor - SaldoSimples;
+                   double auxVal = valor - SaldoSimples;
                    SaldoSimples = 0;
                    LimiteDisponivel -= auxVal;
-               }
-
-               return saque.ID;
+               }               
            }
            catch (Exception)
            {
@@ -67,18 +58,15 @@ namespace SistBancario
            }    
        }
 
-       public override Guid EfetuaDeposito(double valor)
+       public override void CreditaValor(double valor)
        {
            try
-           {
-               Deposito deposito = new Deposito(this, valor);
-               RepositorioOperacoes.Instance.Adiciona(deposito);
-
+           {               
                if (LimiteDisponivel == Limite)
-                   SaldoSimples += deposito.Valor;               
+                   SaldoSimples += valor;               
                else
                {
-                   LimiteDisponivel += deposito.Valor;
+                   LimiteDisponivel += valor;
 
                    double difLimite = LimiteDisponivel - Limite;
 
@@ -87,14 +75,17 @@ namespace SistBancario
                        LimiteDisponivel -= difLimite;
                        SaldoSimples += difLimite;
                    }
-               }
-
-               return deposito.ID;
+               }               
            }
            catch (Exception)
            {
                throw;
            }    
+       }
+
+       public override bool ExistePendencias()
+       {
+           return !(SaldoSimples == 0 && LimiteUtilizado == 0);
        }
     }
 }

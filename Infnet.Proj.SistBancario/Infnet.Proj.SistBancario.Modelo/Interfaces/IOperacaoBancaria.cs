@@ -16,7 +16,9 @@ namespace SistBancario.Operacoes
             this.Data = DateTime.Now;
             this.ID = Guid.NewGuid();
         }
-
+        
+        public abstract void Executa();
+        
         public IConta Conta { get; private set; }
         public Guid ID { get; private set; }
         public DateTime Data { get; private set; }      

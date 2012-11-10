@@ -7,13 +7,13 @@ namespace SistBancario.Modelo
 {
     public class PessoaFisica : Cliente 
     {
-        public PessoaFisica(string Nome,decimal renda,int cpf):base(Nome)
+        public PessoaFisica(string Nome,double renda,int cpf):base(Nome)
         {
             this.Renda = renda;
             this.CPF = cpf;
         }
 
-        public decimal Renda { get; set; }
+        public double Renda { get; set; }
         public int CPF { get; set; } 
     }
 }

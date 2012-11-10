@@ -1,4 +1,5 @@
 ﻿using SistBancario.Interfaces;
+using SistBancario.Repositorios;
 
 namespace SistBancario.Operacoes
 {
@@ -10,12 +11,17 @@ namespace SistBancario.Operacoes
             this.ContaDestino = contaDestino;
             this.Valor = valor;
 
-            this.Conta.EfetuaSaque(this.Valor);
-            contaDestino.EfetuaDeposito(this.Valor);
+            RepositorioOperacoes.Instance.Adiciona(this);
         }
 
         public double Valor { get; private set; }
         public IConta ContaDestino { get; private set; }
 
+
+        public override void Executa()
+        {
+            Conta.DebitaValor(Valor);
+            ContaDestino.CreditaValor(Valor);
+        }
     }
 }

@@ -10,6 +10,11 @@ namespace SistBancario.Repositorios
 {
     public class RepositorioContas: IRepositorio<IConta>
     {
+        RepositorioContas()
+        {
+
+        }
+
         public static RepositorioContas Instance
         {
             get
@@ -37,6 +42,15 @@ namespace SistBancario.Repositorios
                       select cc;
 
             return res.ToArray();
+        }
+
+        public IConta RetornaConta(int numeroConta)
+        {
+            var res = from cc in RetornaTodos()
+                      where cc.NumeroConta == numeroConta
+                      select cc;
+
+            return res.FirstOrDefault();
         }
     }
 }
