@@ -61,7 +61,8 @@ namespace SistBancario
        public override void CreditaValor(double valor)
        {
            try
-           {               
+           {              
+
                if (LimiteDisponivel == Limite)
                    SaldoSimples += valor;               
                else

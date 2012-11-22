@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgenciaTeste.cs" />
+    <Compile Include="ContaEspecialTest.cs" />
+    <Compile Include="ContaSimplesTeste.cs" />
+    <Compile Include="Fabrica\Fabrica.cs" />
+    <Compile Include="OperacoesTeste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

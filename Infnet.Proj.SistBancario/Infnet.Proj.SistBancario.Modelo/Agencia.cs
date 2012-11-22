@@ -39,7 +39,12 @@ namespace Infnet.Proj.SistBancario.Modelo
             return RepositorioContas.Instance.RetornaContas(ID);
         }
 
-        public void CriarConta(Cliente[] clientes)
+        public IConta RetornaConta(int numeroConta)
+        {
+            return RepositorioContas.Instance.RetornaConta(numeroConta);
+        }
+
+        public int CriarConta(Cliente[] clientes)
         {
             double renda = 0;
             foreach (var cliente in clientes)
@@ -52,11 +57,13 @@ namespace Infnet.Proj.SistBancario.Modelo
             AlteraStatusConta(conta, StatusConta.Aberta);
 
             RepositorioContas.Instance.Adiciona(conta);
+
+            return ultimoNumeroConta;
         }
 
         private IConta CriarContaPorPerfil(Cliente[] clientes,double renda)
         {
-            if (renda < 1000)
+            if (renda < 1500)
                 return new ContaSimples(ID, ++ultimoNumeroConta, clientes);
             else
                 return new ContaEspecial(ID, ++ultimoNumeroConta, renda * 0.75, clientes);
